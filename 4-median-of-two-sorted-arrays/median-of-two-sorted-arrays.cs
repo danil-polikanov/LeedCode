@@ -1,28 +1,18 @@
-public class Solution
+public class Solution 
 {
     public double FindMedianSortedArrays(int[] nums1, int[] nums2)
     {
-int[] result = nums1.Take(nums1.Length).Concat(nums2.Take(nums2.Length)).OrderBy(i => i).ToArray();
-    if (result.Length % 2 == 0)
-    {
-        double res = (double)(result[result.Length / 2 - 1] + result[result.Length / 2]) / 2; ;
-        if (res < 0)
-        {
-            return 0;
-        }
-        else
-        {
-            return (double)(result[result.Length / 2 - 1] + result[result.Length / 2]) / 2;
-        }
+        var sizeA = nums1.Length;
+        var sizeB = nums2.Length;
+        var union = new int[sizeA + sizeB];
+        
+        var isEven = (sizeA + sizeB) % 2 == 0;
+        var center = (sizeA + sizeB) / 2;
+        
+        Array.Copy(nums1, 0, union, 0, sizeA);
+        Array.Copy(nums2, 0, union, sizeA, sizeB);
+        Array.Sort(union);
 
-    }
-    else if (result.Length == 1)
-    {
-        return result[0];
-    }
-    else
-    {
-        return result[result.Length / 2];
-    }   
+        return isEven ? (union[center - 1] + union[center]) / 2D : union[center];
     }
 }
